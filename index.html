@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAME — Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Loading overlay -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-tag">Booting portfolio</span>
+      <div class="loader-track">
+        <div class="loader-fill" id="loaderFill"></div>
+      </div>
+      <span class="loader-pct" id="loaderPct">0%</span>
+    </div>
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">NAME</span>
+      <nav class="nav" aria-label="Section navigation">
+        <button class="nav-btn" data-target="home">Home</button>
+        <button class="nav-btn" data-target="about">About</button>
+        <button class="nav-btn" data-target="projects">Projects</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section home-section">
+      <div class="frame hero-frame">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="crossfade" id="heroGallery" aria-hidden="true"></div>
+        <div class="hero-vignette"></div>
+      </div>
+
+      <div class="hero-copy">
+        <div class="signal-bars" aria-hidden="true"><span></span><span></span></div>
+        <p class="eyebrow">Systems &amp; software engineer</p>
+        <h1>Building things that hold up under load.</h1>
+        <p class="hero-sub">A field log of projects, tools, and the occasional overengineered side quest.</p>
+        <button class="btn-primary" id="enterBtn" data-target="projects">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          Continue to projects
+        </button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about-section">
+      <div class="section-heading">
+        <span class="section-index">01</span>
+        <h2>About</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Replace this with a short bio: what you build, what you're curious about,
+            and the kind of problems you like to chase. Two or three short paragraphs
+            read best here — keep it conversational, not a resume rehash.
+          </p>
+          <p>
+            You can mention your background, tools you gravitate toward, and what
+            you're looking for next (internship, full-time role, collaborators, etc).
+          </p>
+          <ul class="about-facts">
+            <li><span>Based in</span>City, State</li>
+            <li><span>Focus</span>Robotics / Firmware / Whatever fits</li>
+            <li><span>Currently</span>Studying or working at X</li>
+          </ul>
+        </div>
+
+        <div class="frame gallery-frame" id="aboutGallery">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <div class="gallery-grid" id="aboutGalleryGrid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section projects-section">
+      <div class="section-heading">
+        <span class="section-index">02</span>
+        <h2>Projects</h2>
+      </div>
+
+      <div class="project-list" id="projectList">
+        <!-- Project cards are injected by script.js from the PROJECTS config,
+             or you can hand-write more <article class="project-card"> blocks
+             following the same structure. -->
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>NAME — built by hand, hosted on GitHub Pages.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
