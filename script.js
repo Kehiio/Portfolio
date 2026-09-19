@@ -18,40 +18,29 @@ const ABOUT_IMAGES = [
   "assets/about/4.jpg",
 ];
 
+// Projects section to edit
 const PROJECTS = [
   {
-    title: "Project title one",
-    role: "Personal project · 2025",
+    title: "Orbbit - Anxiety Reduction Robot",
+    role: "Independent Researcher for San Diego Undergraduate Tech Conference",
     description:
-      "One or two sentences on what this project is, the problem it solves, and your role in building it.",
-    skills: ["Solidworks", "C++", "PID control"],
+      "In this project, I re-created an open-source version of a robotics project originally made by Yale Researchers. It's purpose is to reduce stress by guiding users through deep breathing exercises. I also wrote a paper to be published at the SDUTC conference in October.",
+    skills: ["C++", "ESP32", "Research"],
     images: [
-      "assets/projects/project1/1.jpg",
-      "assets/projects/project1/2.jpg",
-      "assets/projects/project1/3.jpg",
+      "assets/projects/orbbit/1.jpg",
+      "assets/projects/orbbit/2.jpg",
+      "assets/projects/orbbit/3.jpg",
     ],
   },
   {
-    title: "Project title two",
-    role: "Coursework · 2024",
+    title: "Pupper Trivia Robot",
+    role: "Coursework · 2025",
     description:
-      "One or two sentences on what this project is, the problem it solves, and your role in building it.",
-    skills: ["Python", "Sensor fusion", "ROS"],
+      "We created a trivia robot based on the Harry Potter books and ran a study on how anthropomorphism in robots can help students retain information. I led the autonomous navigation and anthropomorphic features.",
+    skills: ["ROS2", "Python", "Research"],
     images: [
-      "assets/projects/project2/1.jpg",
-      "assets/projects/project2/2.jpg",
-    ],
-  },
-  {
-    title: "Project title three",
-    role: "Team project · 2024",
-    description:
-      "One or two sentences on what this project is, the problem it solves, and your role in building it.",
-    skills: ["Onshape", "Manufacturing", "Team lead"],
-    images: [
-      "assets/projects/project3/1.jpg",
-      "assets/projects/project3/2.jpg",
-      "assets/projects/project3/3.jpg",
+      "assets/projects/puppertrivia/1.jpg",
+      "assets/projects/puppertrivia/2.jpg",
     ],
   },
 ];
@@ -60,12 +49,34 @@ const CROSSFADE_INTERVAL_MS = 4500;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+function setupTheme() {
+  const root = document.documentElement;
+  const toggle = document.getElementById("themeToggle");
+  const stored = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  if (stored) {
+    root.setAttribute("data-theme", stored);
+  } else if (prefersDark) {
+    root.setAttribute("data-theme", "dark");
+  }
+
+  toggle.addEventListener("click", () => {
+    const current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+  });
+}
+
+/* ============================================================
    LOADER
    ============================================================ */
 function runLoader() {
   const loader = document.getElementById("loader");
   const fill = document.getElementById("loaderFill");
-  const pct = document.getElementById("loaderPct");
 
   if (reducedMotion) {
     loader.classList.add("loader-done");
@@ -73,18 +84,17 @@ function runLoader() {
   }
 
   let progress = 0;
-  const duration = 1400;
+  const duration = 900;
   const start = performance.now();
 
   function tick(now) {
     const elapsed = now - start;
-    progress = Math.min(100, Math.round((elapsed / duration) * 100));
+    progress = Math.min(100, (elapsed / duration) * 100);
     fill.style.width = progress + "%";
-    pct.textContent = progress + "%";
     if (elapsed < duration) {
       requestAnimationFrame(tick);
     } else {
-      setTimeout(() => loader.classList.add("loader-done"), 200);
+      setTimeout(() => loader.classList.add("loader-done"), 150);
     }
   }
   requestAnimationFrame(tick);
@@ -111,17 +121,11 @@ function emptyNote(text) {
   return div;
 }
 
-// Wraps an <img> in a .photo div — the wrapper is what carries the
-// amber/teal duotone grade (see .photo::after in styles.css), so any
-// image dropped into the site inherits the same cinematic look.
-function makePhoto(src) {
-  const wrap = document.createElement("div");
-  wrap.className = "photo";
+function makeImg(src) {
   const img = document.createElement("img");
   img.src = src;
   img.alt = "";
-  wrap.appendChild(img);
-  return wrap;
+  return img;
 }
 
 /* ============================================================
@@ -138,19 +142,19 @@ async function buildHeroGallery() {
   }
 
   valid.forEach((src, i) => {
-    const photo = makePhoto(src);
-    if (i === 0) photo.classList.add("is-visible");
-    container.appendChild(photo);
+    const img = makeImg(src);
+    if (i === 0) img.classList.add("is-visible");
+    container.appendChild(img);
   });
 
   if (valid.length < 2 || reducedMotion) return;
 
   let current = 0;
-  const photos = container.querySelectorAll(".photo");
+  const imgs = container.querySelectorAll("img");
   setInterval(() => {
-    photos[current].classList.remove("is-visible");
-    current = (current + 1) % photos.length;
-    photos[current].classList.add("is-visible");
+    imgs[current].classList.remove("is-visible");
+    current = (current + 1) % imgs.length;
+    imgs[current].classList.add("is-visible");
   }, CROSSFADE_INTERVAL_MS);
 }
 
@@ -167,31 +171,18 @@ async function buildAboutGallery() {
     return;
   }
 
-  valid.forEach((src) => {
-    grid.appendChild(makePhoto(src));
-  });
+  valid.forEach((src) => grid.appendChild(makeImg(src)));
 }
 
 /* ============================================================
    PROJECT CARDS
    ============================================================ */
-function frameCorners() {
-  const frag = document.createDocumentFragment();
-  ["tl", "tr", "bl", "br"].forEach((pos) => {
-    const span = document.createElement("span");
-    span.className = "corner " + pos;
-    frag.appendChild(span);
-  });
-  return frag;
-}
-
 async function buildProjects() {
   const list = document.getElementById("projectList");
 
   for (const project of PROJECTS) {
     const card = document.createElement("article");
     card.className = "project-card";
-    card.appendChild(frameCorners());
 
     const head = document.createElement("div");
     head.className = "project-head";
@@ -225,11 +216,9 @@ async function buildProjects() {
     const valid = project.images.filter((_, i) => results[i]);
 
     if (valid.length === 0) {
-      gallery.appendChild(emptyNote(`Add images to populate this project's gallery`));
+      gallery.appendChild(emptyNote("Add images to populate this project's gallery"));
     } else {
-      valid.forEach((src) => {
-        gallery.appendChild(makePhoto(src));
-      });
+      valid.forEach((src) => gallery.appendChild(makeImg(src)));
     }
     card.appendChild(gallery);
 
@@ -272,6 +261,7 @@ function setupNav() {
    INIT
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
+  setupTheme();
   runLoader();
   setupNav();
   buildHeroGallery();
