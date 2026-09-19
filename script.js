@@ -6,16 +6,15 @@
    ============================================================ */
 
 const HERO_IMAGES = [
-  "assets/home/1.jpg",
-  "assets/home/2.jpg",
-  "assets/home/3.jpg",
+  "assets/home/ersp.jpg",
+  "assets/home/pupper_group_pic.png",
+  "assets/home/ERSP_complete.jpg",
 ];
 
 const ABOUT_IMAGES = [
-  "assets/about/1.jpg",
-  "assets/about/2.jpg",
-  "assets/about/3.jpg",
-  "assets/about/4.jpg",
+  "assets/about/headshot.jpg",
+  // "assets/about/hiking.jpg",
+  "assets/about/funny.jpg",
 ];
 
 // Projects section to edit
@@ -27,9 +26,9 @@ const PROJECTS = [
       "In this project, I re-created an open-source version of a robotics project originally made by Yale Researchers. It's purpose is to reduce stress by guiding users through deep breathing exercises. I also wrote a paper to be published at the SDUTC conference in October.",
     skills: ["C++", "ESP32", "Research"],
     images: [
-      "assets/projects/orbbit/1.jpg",
-      "assets/projects/orbbit/2.jpg",
-      "assets/projects/orbbit/3.jpg",
+      "assets/orbbit/BreathingDiagram.png",
+      "assets/orbbit/Orbbt-digital-schem.png",
+      "assets/orbbit/Orbbit_Closed.jpg",
     ],
   },
   {
@@ -39,8 +38,8 @@ const PROJECTS = [
       "We created a trivia robot based on the Harry Potter books and ran a study on how anthropomorphism in robots can help students retain information. I led the autonomous navigation and anthropomorphic features.",
     skills: ["ROS2", "Python", "Research"],
     images: [
-      "assets/projects/puppertrivia/1.jpg",
-      "assets/projects/puppertrivia/2.jpg",
+      "assets/puppertrivia/pupper_screen.jpg",
+      "assets/puppertrivia/pupperpotter.png",
     ],
   },
 ];
